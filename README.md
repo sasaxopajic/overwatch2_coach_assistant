@@ -1,7 +1,7 @@
 # Overwatch 2 Coach Assistant
 
 ## Overview
-The Overwatch 2 Coach Assistant is a LangChain application designed to provide coaching and gameplay insights for Overwatch 2 heroes. It helps players understand character abilities, strategies, and lore to improve their gameplay experience.
+The Overwatch 2 Coach Assistant is an application that enhances player training by utilizing YouTube video transcripts for coaching. Instead of watching long videos, players can easily ask questions and receive quick insights related to hero strategies and gameplay tips. This streamlined approach makes it easier for players to access relevant information and improve their skills efficiently.
 
 ## Features
 - Interactive chatbot for hero coaching.
