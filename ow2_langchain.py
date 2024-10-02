@@ -1,38 +1,16 @@
 # The Overwatch 2 Coach chatbot helps users extract and explore video transcriptions to learn strategies, tips, and lore about their favorite Overwatch heroes.
 
-# First thing I do, is importing the Youtube loader 
-
-# # pip install --upgrade --quiet  youtube-transcript-api
-
 from langchain_community.document_loaders import YoutubeLoader
-
-# Import text splitter, because the videos can be up to 1 hour long so the transcripts will be large.
-
-# # pip install -qU langchain-text-splitters
-
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-
-# Import OpenAI LLM for which I need an OPENAI_API_KEY that is stored as an environmental variable.
-
 from langchain_openai import ChatOpenAI
-
-# I will also need OpenAI embeddings.
-
-# # pip install langchain-openai
-
 from langchain_openai import OpenAIEmbeddings
-
 from langchain_core.prompts import PromptTemplate
-from langchain.chains import  LLMChain
-
-# I will be using FAISS library for vector stores.
-
 from langchain_community.vectorstores import FAISS
 
 from langchain_core.output_parsers import StrOutputParser
 parser = StrOutputParser()
 
-# Firstly, let's load our local environment variables.
+# Load our local environment variables.
 
 from dotenv import load_dotenv
 
@@ -42,7 +20,7 @@ load_dotenv()
 
 embeddings = OpenAIEmbeddings()
 
-# Now I create vector database for the video transcripts.
+# Create vector database for the video transcripts.
 
 def create_vector_database_from_yt_url(video_url: str) -> FAISS:
     # Load and transcript the youtube video    
