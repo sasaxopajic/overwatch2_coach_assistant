@@ -1,5 +1,8 @@
 # The Overwatch 2 Coach chatbot helps users extract and explore video transcriptions to learn strategies, tips, and lore about their favorite Overwatch heroes.
 
+import os
+import faiss
+from faiss import write_index, read_index
 from langchain_community.document_loaders import YoutubeLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_openai import ChatOpenAI
@@ -20,19 +23,30 @@ load_dotenv()
 
 embeddings = OpenAIEmbeddings()
 
-# Create vector database for the video transcripts.
+# Path to the persistent storage directory
 
-def create_vector_database_from_yt_url(video_url: str) -> FAISS:
-    # Load and transcript the youtube video    
-    loader = YoutubeLoader.from_youtube_url(video_url)
-    transcript = loader.load()
+PERSIST_DIR = "./storage"
 
-    # Very large transcript of the video is being splitted into smaller chunks
-    text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=100)
-    docs = text_splitter.split_documents(transcript)
+# Load or create vector database for the video transcripts.
 
-    # Initialize database. FAISS does similarity search
-    db = FAISS.from_documents(docs, embeddings)
+def load_or_create_vector_database_from_yt_url(video_url: str) -> FAISS:
+    # Check if persistent directory exists
+    if os.path.exists(PERSIST_DIR):
+        # Load the database from the directory
+        db = FAISS.load_local(PERSIST_DIR, embeddings= embeddings, allow_dangerous_deserialization=True)
+    # If it doesn't exist, create a new database and store it
+    else:
+        # Load and transcript the youtube video    
+        loader = YoutubeLoader.from_youtube_url(video_url)
+        transcript = loader.load()
+
+        # Very large transcript of the video is being splitted into smaller chunks
+        text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=100)
+        docs = text_splitter.split_documents(transcript)
+
+        # Initialize database. FAISS does similarity search
+        db = FAISS.from_documents(docs, embeddings)
+        db.save_local(PERSIST_DIR)
     return db
 
 

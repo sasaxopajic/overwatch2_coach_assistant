@@ -24,7 +24,7 @@ with st.sidebar:
 # Process user input and generate response
 if submit_button and query and youtube_url:
     # Create the database and get the response
-    db = lch.create_vector_database_from_yt_url(youtube_url)
+    db = lch.load_or_create_vector_database_from_yt_url(youtube_url)
     response = lch.get_response_from_query(db, query)
 
     # Store the user query and response in chat history
