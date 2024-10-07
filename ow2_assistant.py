@@ -14,9 +14,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-
 st.image("./assets/ow2_logo.png", use_column_width=True)
-
 st.markdown("<h1 style='text-align: center'>Type: 3C-HO - Overwatch 2 Assistant</h1>", unsafe_allow_html=True)
 st.markdown("<h4 style='text-align: center'>All strategies you want to know!</h4>", unsafe_allow_html=True)
 
@@ -35,7 +33,6 @@ with st.sidebar:
             key="query"
             )
         submit_button = st.form_submit_button(label='Submit')
-
 
 # Process user input and generate response
 if submit_button and query and youtube_url:

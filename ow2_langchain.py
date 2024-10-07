@@ -1,8 +1,6 @@
 # The Overwatch 2 Coach chatbot helps users extract and explore video transcriptions to learn strategies, tips, and lore about their favorite Overwatch heroes.
 
 import os
-import faiss
-from faiss import write_index, read_index
 from langchain_community.document_loaders import YoutubeLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_openai import ChatOpenAI
